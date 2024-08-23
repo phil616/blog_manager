@@ -2,6 +2,8 @@ import os
 
 from fastapi import APIRouter, UploadFile, HTTPException
 from fastapi.responses import FileResponse
+
+from core.logger import log
 from model.File import File
 from model.Share import Share
 from core.utils import gen_random_string
@@ -25,19 +27,20 @@ async def read_file(filename: str) -> bytes:
     return content
 
 
-@file_router.post("/upload",include_in_schema=False)
+@file_router.post("/upload", include_in_schema=False)
 async def upload_file(file: UploadFile):
     data = await file.read()
     mime = file.content_type
     filename = file.filename
     fid = gen_random_string(32)
-    await File.create(
+    file = await File.create(
         fid=fid,
         filename=filename,
         mime=mime,
     )
-    await write_file(fid, data)
-
+    dao = await write_file(fid, data)
+    log.info(f"File {file.fid} uploaded successfully and stored in {dao}")
+    return {"fid": file.fid}
 
 @file_router.get("/download/{fid}")
 async def download_file(fid: str):
