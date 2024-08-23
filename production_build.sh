@@ -29,5 +29,5 @@ docker run -d \
   -e SMTP_PASSWORD=$SYS_SMTP_PASSWORD \
   -e SMTP_PORT=$SYS_SMTP_PORT \
   -e EMAILS_FROM_EMAIL=$SYS_EMAILS_FROM_EMAIL \
-  -p 80:1588 \
+  -p 1588:1588 \
   blogapi
