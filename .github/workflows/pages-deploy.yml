@@ -42,6 +42,7 @@ jobs:
             rm -rf blog_manager
             git clone https://${{ secrets.SYS_GITHUB_TOKEN }}@github.com/phil616/blog_manager.git
             cd blog_manager
+            su root
             ./production_build.sh
           
 
