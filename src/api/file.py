@@ -33,12 +33,11 @@ async def upload_file(file: UploadFile):
     mime = file.content_type
     filename = file.filename
     fid = gen_random_string(32)
-    fdb = await File.create(
+    await File.create(
         fid=fid,
         filename=filename,
         mime=mime,
     )
-    await fdb.save()
     await write_file(fid, data)
     return {"fid": fid}
 
