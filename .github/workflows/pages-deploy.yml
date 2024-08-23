@@ -43,6 +43,6 @@ jobs:
             git clone https://${{ secrets.SYS_GITHUB_TOKEN }}@github.com/phil616/blog_manager.git
             cd blog_manager
             su root
-            ./production_build.sh
+            bash production_build.sh
           
 
