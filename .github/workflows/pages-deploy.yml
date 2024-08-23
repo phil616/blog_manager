@@ -1,0 +1,42 @@
+name: "Deploy Backend API"
+on:
+  push:
+    branches:
+      - main
+      - master
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set environment variables
+        run: |
+          echo "SYS_GITHUB_TOKEN=${{ secrets.SYS_GITHUB_TOKEN }}" >> $GITHUB_ENV
+          echo "SYS_BLOG_REPO=${{ secrets.SYS_BLOG_REPO }}" >> $GITHUB_ENV
+          echo "SYS_LOGIN_USERNAME=${{ secrets.SYS_LOGIN_USERNAME }}" >> $GITHUB_ENV
+          echo "SYS_LOGIN_PASSWORD=${{ secrets.SYS_LOGIN_PASSWORD }}" >> $GITHUB_ENV
+          echo "SYS_SMTP_HOST=${{ secrets.SYS_SMTP_HOST }}" >> $GITHUB_ENV
+          echo "SYS_SMTP_USER=${{ secrets.SYS_SMTP_USER }}" >> $GITHUB_ENV
+          echo "SYS_SMTP_PASSWORD=${{ secrets.SYS_SMTP_PASSWORD }}" >> $GITHUB_ENV
+          echo "SYS_SMTP_PORT=${{ secrets.SYS_SMTP_PORT }}" >> $GITHUB_ENV
+          echo "SYS_EMAILS_FROM_EMAIL=${{ secrets.SYS_EMAILS_FROM_EMAIL }}" >> $GITHUB_ENV
+
+
+      - name: Run remote scripts
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          key: ${{ secrets.REMOTE_PRIVATE_KEY }}
+          script: |
+            ls -l
+            git clone https://$SYS_GITHUB_TOKEN@github.com/$SYS_BLOG_REPO.git
+            cd blog_manager
+            ./production_build.sh
+          
+

@@ -1,0 +1,17 @@
+PyGithub~=2.3.0
+pydantic~=2.8.2
+fastapi~=0.112.0
+starlette~=0.37.2
+uvicorn~=0.30.6
+python-gnupg~=0.5.2
+pydantic-settings~=2.4.0
+loguru~=0.7.2
+tortoise-orm~=0.21.6
+python-multipart~=0.0.9
+aiomysql~=0.2.0
+aiofiles~=24.1.0
+aioredis~=2.0.1
+aiosmtplib~=3.0.2
+PyJWT~=2.9.0
+requests~=2.32.3
+
