@@ -33,13 +33,13 @@ async def upload_file(file: UploadFile):
     mime = file.content_type
     filename = file.filename
     fid = gen_random_string(32)
-    file = await File.create(
+    fdb = await File.create(
         fid=fid,
         filename=filename,
         mime=mime,
     )
-    dao = await write_file(fid, data)
-    log.info(f"File {file.fid} uploaded successfully and stored in {dao}")
+    await fdb.save()
+    await write_file(fid, data)
     return {"fid": file.fid}
 
 @file_router.get("/download/{fid}")
