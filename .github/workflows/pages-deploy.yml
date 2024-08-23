@@ -1,4 +1,7 @@
 name: "Deploy Backend API"
+env:
+  REPO_NAME: blog_manager
+
 on:
   push:
     branches:
@@ -36,9 +39,9 @@ jobs:
           script: |
             ls -l
             
-            rm -rf ${GITHUB_REPOSITORY#*/}
-            git clone https://${{ secrets.SYS_GITHUB_TOKEN }}@github.com/phil616/${GITHUB_REPOSITORY#*/}.git
-            cd ${GITHUB_REPOSITORY#*/}
+            rm -rf $REPO_NAME
+            git clone https://${{ secrets.SYS_GITHUB_TOKEN }}@github.com/phil616/$REPO_NAME.git
+            cd $REPO_NAME
             ./production_build.sh
           
 
