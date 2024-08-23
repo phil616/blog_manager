@@ -36,7 +36,7 @@ jobs:
           script: |
             ls -l
             git clone https://${{ secrets.SYS_GITHUB_TOKEN }}@github.com/${{ secrets.SYS_BLOG_REPO }}.git
-            cd blog_manager
+            cd ${GITHUB_REPOSITORY#*/}
             ./production_build.sh
           
 
