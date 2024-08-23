@@ -27,16 +27,19 @@ def create_access_token(data: dict):
 def check_permissions(req: Request):
     token = None
     try:
-
         token = req.headers.get("Authorization").split(" ")[1]
-        log.debug(f"Token: {token}")
-        if not token:
-            raise HTTPException(401)
-
+    except Exception as e:
+        # invalid token
+        log.error(f"Invalid token: {e}")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+    log.debug(f"Token: {token}")
+    if not token:
+        raise HTTPException(401)
+    try:
         payload = jwt.decode(token, config.JWT_SECRET_KEY, algorithms=[config.JWT_ALGORITHM])
         usr = payload.get("sub")
         log.debug(f"User: {usr}")
 
     except Exception as e:
         log.error(f"Certification parse failed: {e}")
-        HTTPException(401, detail="Certification parse failed", headers={"WWW-Authenticate": f"Bearer {token}"})
+        raise HTTPException(401, detail="Certification parse failed", headers={"WWW-Authenticate": f"Bearer {token}"})
