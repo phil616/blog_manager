@@ -39,9 +39,9 @@ jobs:
           script: |
             ls -l
             
-            rm -rf $REPO_NAME
-            git clone https://${{ secrets.SYS_GITHUB_TOKEN }}@github.com/phil616/$REPO_NAME.git
-            cd $REPO_NAME
+            rm -rf blog_manager
+            git clone https://${{ secrets.SYS_GITHUB_TOKEN }}@github.com/phil616/blog_manager.git
+            cd blog_manager
             ./production_build.sh
           
 
