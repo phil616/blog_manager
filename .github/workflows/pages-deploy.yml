@@ -35,7 +35,7 @@ jobs:
           key: ${{ secrets.REMOTE_PRIVATE_KEY }}
           script: |
             ls -l
-            git clone https://$SYS_GITHUB_TOKEN@github.com/$SYS_BLOG_REPO.git
+            git clone https://${{ secrets.SYS_GITHUB_TOKEN }}@github.com/${{ secrets.SYS_BLOG_REPO }}.git
             cd blog_manager
             ./production_build.sh
           
