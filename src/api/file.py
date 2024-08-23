@@ -40,7 +40,7 @@ async def upload_file(file: UploadFile):
     )
     await fdb.save()
     await write_file(fid, data)
-    return {"fid": file.fid}
+    return {"fid": fid}
 
 @file_router.get("/download/{fid}")
 async def download_file(fid: str):
