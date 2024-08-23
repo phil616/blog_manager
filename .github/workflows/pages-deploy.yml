@@ -17,18 +17,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set environment variables
-        run: |
-          echo "SYS_GITHUB_TOKEN=${{ secrets.SYS_GITHUB_TOKEN }}" >> $GITHUB_ENV
-          echo "SYS_BLOG_REPO=${{ secrets.SYS_BLOG_REPO }}" >> $GITHUB_ENV
-          echo "SYS_LOGIN_USERNAME=${{ secrets.SYS_LOGIN_USERNAME }}" >> $GITHUB_ENV
-          echo "SYS_LOGIN_PASSWORD=${{ secrets.SYS_LOGIN_PASSWORD }}" >> $GITHUB_ENV
-          echo "SYS_SMTP_HOST=${{ secrets.SYS_SMTP_HOST }}" >> $GITHUB_ENV
-          echo "SYS_SMTP_USER=${{ secrets.SYS_SMTP_USER }}" >> $GITHUB_ENV
-          echo "SYS_SMTP_PASSWORD=${{ secrets.SYS_SMTP_PASSWORD }}" >> $GITHUB_ENV
-          echo "SYS_SMTP_PORT=${{ secrets.SYS_SMTP_PORT }}" >> $GITHUB_ENV
-          echo "SYS_EMAILS_FROM_EMAIL=${{ secrets.SYS_EMAILS_FROM_EMAIL }}" >> $GITHUB_ENV
-
 
       - name: Run remote scripts
         uses: appleboy/ssh-action@master
@@ -37,8 +25,19 @@ jobs:
           username: ${{ secrets.REMOTE_USERNAME }}
           key: ${{ secrets.REMOTE_PRIVATE_KEY }}
           script: |
+            echo 'export SYS_GITHUB_TOKEN=${{ secrets.SYS_GITHUB_TOKEN }}' >> ~/.bashrc
+            echo 'export SYS_BLOG_REPO=${{ secrets.SYS_BLOG_REPO }}' >> ~/.bashrc
+            echo 'export SYS_LOGIN_USERNAME=${{ secrets.SYS_LOGIN_USERNAME }}' >> ~/.bashrc
+            echo 'export SYS_LOGIN_PASSWORD=${{ secrets.SYS_LOGIN_PASSWORD }}' >> ~/.bashrc
+            echo 'export SYS_SMTP_HOST=${{ secrets.SYS_SMTP_HOST }}' >> ~/.bashrc
+            echo 'export SYS_SMTP_USER=${{ secrets.SYS_SMTP_USER }}' >> ~/.bashrc
+            echo 'export SYS_SMTP_PASSWORD=${{ secrets.SYS_SMTP_PASSWORD }}' >> ~/.bashrc
+            echo 'export SYS_SMTP_PORT=${{ secrets.SYS_SMTP_PORT }}' >> ~/.bashrc
+            echo 'export SYS_EMAILS_FROM_EMAIL=${{ secrets.SYS_EMAILS_FROM_EMAIL }}' >> ~/.bashrc
+
+            source ~/.bashrc
+
             ls -l
-            
             rm -rf blog_manager
             git clone https://${{ secrets.SYS_GITHUB_TOKEN }}@github.com/phil616/blog_manager.git
             cd blog_manager
