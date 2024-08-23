@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     BLOG_REPO: str = Field(default="CHANGETHIS", env="BLOG_REPO", description="博客仓库名")
 
     # ---- SMTP Settings ----
-    SMTP_PORT: int = 587
+    SMTP_PORT: Union[int, str] = Field(default=587, env="SMTP_PORT", description="SMTP端口")
     SMTP_HOST: Union[str, None] = Field(default=None, env="SMTP_HOST", description="SMTP主机")
     SMTP_USER: Union[str, None] = Field(default=None, env="SMTP_USER", description="SMTP用户名")
     SMTP_PASSWORD: Union[str, None] = Field(default=None, env="SMTP_PASSWORD", description="SMTP密码")

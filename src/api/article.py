@@ -78,7 +78,7 @@ async def migrate_article(email: str,
             global_kv.set_value("bg_task_" + bg_id, "running")
             await send_email(
                 settings.SMTP_HOST,
-                settings.SMTP_PORT,
+                int(settings.SMTP_PORT),
                 settings.SMTP_USER,
                 settings.SMTP_PASSWORD,
                 subject=f"Migrate article {filename}",

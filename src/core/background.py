@@ -9,7 +9,7 @@ async def export_file_to_email(filename: str, message:str,content: str, send_to:
         g_global_kv.set_value("bg_task_" + bg_id, "running")
         await send_email(
             settings.SMTP_HOST,
-            settings.SMTP_PORT,
+            int(settings.SMTP_PORT),
             settings.SMTP_USER,
             settings.SMTP_PASSWORD,
             subject=f"Export file {filename}",
