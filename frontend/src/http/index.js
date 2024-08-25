@@ -1,4 +1,8 @@
 import axios from 'axios';
+// 假设的getCookie函数
+function getCookie(name) {
+  return sessionStorage.getItem(name);
+}
 
 // 创建axios实例
 const service = axios.create({
@@ -35,7 +39,3 @@ service.interceptors.response.use(
 
 export default service;
 
-// 假设的getCookie函数
-function getCookie(name) {
-  return sessionStorage.getItem(name);
-}
