@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE 1588
 
-CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "1588", "--lifespan", "on"]
+CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "1588", "--lifespan", "on", "--log-config", "uvclogcfg.yml"]

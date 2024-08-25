@@ -40,7 +40,7 @@ class Settings(BaseSettings):
                                            description="JWT访问过期时间（分钟）")
     # ---- Switches ----
     ENABLE_BACKEND_CORS_ORIGINS: bool = Field(default=True)  # enable this if on a remote server
-
+    ENABLE_STATIC_DIR: bool = Field(default=False)  # enable this if you want to serve static files
     MODEL_DIR: str = Field(default="model")
 
     # ---- SQLite FILE ----
