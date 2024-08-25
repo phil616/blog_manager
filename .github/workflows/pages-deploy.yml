@@ -26,7 +26,6 @@ jobs:
       - name: Set npm environment variables
         run: |
           echo "VUE_APP_API=${{ secrets.VUE_APP_API }}" >> $GITHUB_ENV
-          echo "VUE_APP_BASE_URL=${{ secrets.VUE_APP_BASE_URL }}" >> $GITHUB_ENV
 
       
       - name: Install Frontend dependencies
@@ -45,7 +44,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USERNAME }}
           ARGS: "-rltgoDzvO --delete"
-          SOURCE: "frontend/dist/"
+          SOURCE: "frontend/dist"
           TARGET: "/var/www/blogfrontend"
           SCRIPT: |
             nginx -s reload
