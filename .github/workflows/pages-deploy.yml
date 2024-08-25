@@ -45,7 +45,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USERNAME }}
           ARGS: "-rltgoDzvO --delete"
-          SOURCE: "frontend/dist"
+          SOURCE: "frontend/dist/"
           TARGET: "/var/www/blogfrontend"
           SCRIPT: |
             nginx -s reload
