@@ -38,7 +38,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.REMOTE_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USERNAME }}
-          ARGS: "-rltgoDzvO --delete"
+          ARGS: "-avz --delete"
           SOURCE: "frontend/dist"
           TARGET: "/var/www/blogfrontend"
           SCRIPT: |
