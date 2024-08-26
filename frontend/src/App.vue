@@ -63,7 +63,7 @@
     <v-main>
       <router-view />
     </v-main>
-      <FooterPage />
+    <FooterPage />
   </v-app>
 </template>
 

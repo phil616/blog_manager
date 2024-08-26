@@ -1,38 +1,52 @@
 import axios from 'axios';
-// 假设的getCookie函数
-function getCookie(name) {
+
+// Get token from session storage
+function getToken(name) {
   return sessionStorage.getItem(name);
 }
 
-// 创建axios实例
+let api_prefix = process.env.VUE_APP_API || undefined;
+
+let baseURL = null;
+if (api_prefix){
+  baseURL = api_prefix + "/api";
+}else{
+  baseURL = "/api";
+}
 const service = axios.create({
-  baseURL: "/api"
+  baseURL: baseURL,
+  withCredentials: false,  // This is required to handle cookies
 });
-service.baseURL = "/api";
-// 请求拦截器
+
+service.baseURL = baseURL;
+
+
+// Request Interceptor
+// do something before request is sent
 service.interceptors.request.use(
   config => {
-    // 从Cookie中获取token
-    const token = getCookie('token'); // 假设getCookie是一个函数，用于从Cookie中获取指定字段的值
+
+    // get token from cookie
+    const token = getToken('token');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
   },
   error => {
-    // 对请求错误做些什么
+    // do something with request error
     return Promise.reject(error);
   }
 );
 
-// 响应拦截器
+// response Interceptor
 service.interceptors.response.use(
   response => {
-    // 对响应数据做点什么
+    // do something with response data before return to the component
     return response;
   },
   error => {
-    // 对响应错误做点什么
+    // do something with response error
     return Promise.reject(error);
   }
 );

@@ -71,7 +71,9 @@
                   }
                   })
                 },
-                viewBlog(){},
+                viewBlog(){
+                  window.open("https://phil616.github.io")
+                },
                 deleteBlog(){
                   alert("Delete is not supported in this view.")
                 },

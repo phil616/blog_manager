@@ -41,9 +41,7 @@ jobs:
           ARGS: "-avz --delete"
           SOURCE: "frontend/dist"
           TARGET: "/var/www/blogfrontend"
-          SCRIPT: |
-            nginx -s reload
-            
+
       - name: Run remote scripts
         uses: appleboy/ssh-action@master
         with:
@@ -51,6 +49,7 @@ jobs:
           username: ${{ secrets.REMOTE_USERNAME }}
           key: ${{ secrets.REMOTE_PRIVATE_KEY }}
           script: |
+            nginx -s reload
             echo 'export SYS_GITHUB_TOKEN=${{ secrets.SYS_GITHUB_TOKEN }}' >> ~/.bashrc
             echo 'export SYS_BLOG_REPO=${{ secrets.SYS_BLOG_REPO }}' >> ~/.bashrc
             echo 'export SYS_LOGIN_USERNAME=${{ secrets.SYS_LOGIN_USERNAME }}' >> ~/.bashrc
@@ -68,6 +67,7 @@ jobs:
             git clone https://${{ secrets.SYS_GITHUB_TOKEN }}@github.com/phil616/blog_manager.git
             cd blog_manager
             su root
+
             bash production_build.sh
           
 

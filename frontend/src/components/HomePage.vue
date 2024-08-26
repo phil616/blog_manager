@@ -3,7 +3,47 @@
   <v-container>
     <v-row>
       <v-col>
-        <h1 class="text-center">博客和文章的管理后台</h1>
+        <h1 class="text-center">{{status}}</h1>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" md="6" lg="4">
+        <v-card>
+          <v-card-title>登陆</v-card-title>
+          <v-card-actions>
+            <v-btn text color="primary" @click="$router.push('/login')">LOGIN</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="6" lg="4">
+        <v-card>
+          <v-card-title>文章管理</v-card-title>
+          <v-card-actions>
+            <v-btn text color="primary" @click="$router.push('/article')">GO</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row v-if="access">
+      <v-col>
+        <h1 class="text-center">文章管理</h1>
+      </v-col>
+    </v-row>
+    <v-row v-if="access">
+      <v-col cols="12" md="6" lg="4" v-for="item in items" :key="item.id">
+        <v-card>
+          <v-card-title>{{item.title}}</v-card-title>
+          <v-card-text>文章ID：{{item.id}}</v-card-text>
+          <v-card-text v-if="item.decrypted">文章被加密</v-card-text>
+          <v-card-actions>
+            <v-btn text color="primary" @click="editArticle(item.id)">EDIT</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <h1 class="text-center">系统开发状态</h1>
       </v-col>
     </v-row>
     <v-row>
@@ -18,7 +58,6 @@
             4. 文章删除<br>
             5. 文章导出-0%<br>
           </v-card-text>
-          
         </v-card>
       </v-col>
       <v-col cols="12" md="6" lg="4">
@@ -60,11 +99,41 @@
 </template>
 
 <script>
+import http from '@/http'
 export default {
-   components:{
-},
+  components:{},
   name: 'HomePage',
-};
+  data() {
+    return {
+      access: false,
+      status: '尚未登陆',
+      items: [],
+  };
+},
+  methods:{
+    fetchArticles(){
+      http.get("/article/all").then(res => {
+        if(res.status === 200){
+          this.items = res.data
+          this.access = true
+          this.status = "您已登陆"
+        }else{
+          this.access = false
+        }
+
+      }).catch(err => {
+        err;
+        this.access = false;
+      })
+    },
+    editArticle(id){
+      this.$router.push("/new-article?id="+id);
+    }
+  },
+  created(){
+    this.fetchArticles()
+  }
+}
 </script>
 
 <style scoped>

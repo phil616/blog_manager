@@ -1,6 +1,7 @@
 #!/bin/bash
 
 mkdir -p ~/storage
+mkdir -p ~/applog
 # 切换到src目录
 cd src
 
@@ -20,6 +21,7 @@ docker run -d \
   --network host \
   --privileged \
   -v ~/storage:/app/storage \
+  -v ~/applog:/app/log \
   -e GITHUB_TOKEN=$SYS_GITHUB_TOKEN \
   -e BLOG_REPO=$SYS_BLOG_REPO \
   -e LOGIN_USERNAME=$SYS_LOGIN_USERNAME \
